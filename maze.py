@@ -107,6 +107,7 @@ class Cell:
 
 class Maze:
     def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, window):
+        self.cells = []
         self.x1 = x1
         self.y1 = y1
         self.num_rows = num_rows
@@ -114,13 +115,27 @@ class Maze:
         self.cell_size_x = cell_size_x
         self.cell_size_y = cell_size_y
         self.window = window
-        self._create_cells()
+        self.create_cells()
+
+    def create_cells(self):
+        x1 = self.x1
+        for i in range(self.num_rows):
+            y1 = self.y1
+            cell_column = []
+            for j in range(self.num_cols):
+                cell_column.append(Cell(x1, y1, x1 + self.cell_size_x, y1 + self.cell_size_y, self.window))
+                y1 += self.cell_size_y
+            self.cells.append(cell_column)
+            x1 += self.cell_size_x
+        for col in self.cells:
+            for row in col:
+                self.draw_cell(row.x1, row.y1)
 
 
 
 def main():
     win = Window(800, 600)
-    cell1 = Cell(20, 200, 20, 200, win)
+    cell1 = Cell(20, 100, 20, 200, win)
     cell2 = Cell(219, 400, 219, 400, win)
     cell1.draw()
     cell2.draw()
