@@ -132,7 +132,11 @@ class Maze:
                 self.draw_cell(self.cells.index(col) + 1, col.index(row) + 1)
 
     def draw_cell(self, i, j):
-        pass
+        cell_x_pos = self.x1 + (i * self.cell_size_x)
+        cell_y_pos = self.y1 + (j * self.cell_size_y)
+        self.cells[i-1][j-1].draw()
+        self.animate()
+
 
 
 
