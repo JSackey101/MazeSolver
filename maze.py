@@ -129,7 +129,11 @@ class Maze:
             x1 += self.cell_size_x
         for col in self.cells:
             for row in col:
-                self.draw_cell(row.x1, row.y1)
+                self.draw_cell(self.cells.index(col) + 1, col.index(row) + 1)
+
+    def draw_cell(self, i, j):
+        pass
+
 
 
 
