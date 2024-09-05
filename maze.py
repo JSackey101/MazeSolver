@@ -112,7 +112,7 @@ def main():
     cell2 = Cell(219, 400, 219, 400, win)
     cell1.draw()
     cell2.draw()
-    cell1.draw_move(cell2)
+    cell1.draw_move(cell2, undo=True)
     win.wait_for_close()
 
 
