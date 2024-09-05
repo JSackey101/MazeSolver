@@ -61,7 +61,7 @@ class Line:
 
 
 class Cell:
-    def __init__(self, x1, x2, y1, y2, window):
+    def __init__(self, x1, x2, y1, y2, window=None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -106,7 +106,7 @@ class Cell:
         self.window.draw_line(line=line_between, fill_colour=fill_colour)
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, window):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, window=None):
         self.cells = []
         self.x1 = x1
         self.y1 = y1
@@ -119,11 +119,11 @@ class Maze:
 
     def create_cells(self):
         x1 = self.x1
-        for i in range(self.num_rows + 1):
+        for j in range(self.num_cols):
             y1 = self.y1
             cell_column = []
-            for j in range(self.num_cols + 1):
-                cell_column.append(Cell(x1, y1, x1 + self.cell_size_x, y1 + self.cell_size_y, self.window))
+            for i in range(self.num_rows):
+                cell_column.append(Cell(x1, y1, x1 + self.cell_size_x, y1 + self.cell_size_y))
                 y1 += self.cell_size_y
             self.cells.append(cell_column)
             x1 += self.cell_size_x
@@ -134,8 +134,9 @@ class Maze:
     def draw_cell(self, i, j):
         cell_x_pos = self.x1 + (i * self.cell_size_x)
         cell_y_pos = self.y1 + (j * self.cell_size_y)
-        self.cells[i-1][j-1].draw()
-        self.animate()
+        if self.window:
+            Cell(cell_x_pos, cell_x_pos + self.cell_size_x, cell_y_pos, cell_y_pos + self.cell_size_y, self.window).draw()
+            self.animate()
 
     def animate(self):
         self.window.redraw()
