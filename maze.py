@@ -137,6 +137,9 @@ class Maze:
         self.cells[i-1][j-1].draw()
         self.animate()
 
+    def animate(self):
+        self.window.redraw()
+        time.sleep(0.05)
 
 
 
