@@ -161,9 +161,9 @@ class Maze:
 
     def break_entrance_and_exit(self):
         self.cells[0][0].has_top_wall = False
-        self.draw_cell(1,1)
+        self.draw_cell(0,0)
         self.cells[-1][-1].has_bottom_wall = False
-        self.draw_cell(self.num_rows, self.num_cols)
+        self.draw_cell(self.num_cols - 1, self.num_rows - 1)
 
 
 
@@ -171,6 +171,7 @@ class Maze:
 def main():
     win = Window(800, 600)
     maze = Maze(10,10,5,4,50,50,win)
+    maze.break_entrance_and_exit()
     win.wait_for_close()
 
 
