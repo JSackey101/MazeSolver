@@ -57,6 +57,18 @@ class Line:
         canvas.create_line(self.point_one.x, self.point_one.y, self.point_two.x, self.point_two.y, fill=fill_colour,
                            width=2)
 
+class Cell:
+    def __init__(self, x1, x2, y1, y2, window):
+        self.has_left_wall = True
+        self.has_right_wall = True
+        self.has_top_wall = True
+        self.has_bottom_wall = True
+        self.x1 = x1
+        self.x2 = x2
+        self.y1 = y1
+        self.y2 = y2
+        self.window = window
+
 
 def main():
     win = Window(800, 600)
