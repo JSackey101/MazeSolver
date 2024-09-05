@@ -89,10 +89,8 @@ class Cell:
 
 def main():
     win = Window(800, 600)
-    first_point = Point(0,0)
-    second_point = Point(200,400)
-    line = Line(first_point, second_point)
-    win.draw_line(line=line, fill_colour="red")
+    cell1 = Cell(20,200,20,200,win)
+    cell1.draw()
     win.wait_for_close()
 
 if __name__ == '__main__':
