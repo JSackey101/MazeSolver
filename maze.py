@@ -95,17 +95,24 @@ class Cell:
             fill_colour = "gray"
         else:
             fill_colour = "red"
-        from_cell_point = Point((self.x1 + self.x2) / 2,
-                                (self.y1 + self.y2) / 2)  # Change if pixels can't be decimal by using round or int
-        to_cell_point = Point((to_cell.x1 + to_cell.x2) / 2,
-                              (to_cell.y1 + to_cell.y2) / 2)  # Change if pixels can't be decimal by using round or int
+        from_cell_point = Point(round((self.x1 + self.x2) / 2),
+                                round(
+                                    (self.y1 + self.y2) / 2))  # Change if pixels can't be decimal by using round or int
+        to_cell_point = Point(round((to_cell.x1 + to_cell.x2) / 2),
+                              round((
+                                                to_cell.y1 + to_cell.y2) / 2))  # Change if pixels can't be decimal by using round or int
+        print(to_cell_point.x)
         line_between = Line(from_cell_point, to_cell_point)
         self.window.draw_line(line=line_between, fill_colour=fill_colour)
+
 
 def main():
     win = Window(800, 600)
     cell1 = Cell(20, 200, 20, 200, win)
+    cell2 = Cell(219, 400, 219, 400, win)
     cell1.draw()
+    cell2.draw()
+    cell1.draw_move(cell2)
     win.wait_for_close()
 
 
