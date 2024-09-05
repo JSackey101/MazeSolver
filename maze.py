@@ -119,10 +119,10 @@ class Maze:
 
     def create_cells(self):
         x1 = self.x1
-        for i in range(self.num_rows):
+        for i in range(self.num_rows + 1):
             y1 = self.y1
             cell_column = []
-            for j in range(self.num_cols):
+            for j in range(self.num_cols + 1):
                 cell_column.append(Cell(x1, y1, x1 + self.cell_size_x, y1 + self.cell_size_y, self.window))
                 y1 += self.cell_size_y
             self.cells.append(cell_column)
@@ -146,11 +146,7 @@ class Maze:
 
 def main():
     win = Window(800, 600)
-    cell1 = Cell(20, 100, 20, 200, win)
-    cell2 = Cell(219, 400, 219, 400, win)
-    cell1.draw()
-    cell2.draw()
-    cell1.draw_move(cell2, undo=True)
+    maze = Maze(10,10,4,4,50,50,win)
     win.wait_for_close()
 
 
