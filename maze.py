@@ -22,7 +22,8 @@ class Window:
         self.height = height
         self.root = Tk()  # Creates initial root widget using Tk() and sets it to root attribute
         self.root.title("My Maze Solver Application")  # Sets the root attributes title
-        self.canvas = Canvas(master=self.root, height=self.height, width=self.width)  # Creates a Canvas widget and sets it to the canvas attribute
+        self.canvas = Canvas(master=self.root, height=self.height,
+                             width=self.width)  # Creates a Canvas widget and sets it to the canvas attribute
         self.canvas.pack()  # Packs the canvas widget so it's ready to drawn
         self.running = False  # Represents whether the window is "running"
         self.root.protocol("WM_DELETE_WINDOW", self.close)
@@ -42,6 +43,7 @@ class Window:
     def draw_line(self, line, fill_colour):
         line.draw(canvas=self.canvas, fill_colour=fill_colour)
 
+
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -57,20 +59,21 @@ class Line:
         canvas.create_line(self.point_one.x, self.point_one.y, self.point_two.x, self.point_two.y, fill=fill_colour,
                            width=2)
 
+
 class Cell:
     def __init__(self, x1, x2, y1, y2, window):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
-        self.x1 = x1 # top left corner
-        self.x2 = x2 # bottom right corner
-        self.y1 = y1 # top left corner
-        self.y2 = y2 # bottom right corner
+        self.x1 = x1  # top left corner
+        self.x2 = x2  # bottom right corner
+        self.y1 = y1  # top left corner
+        self.y2 = y2  # bottom right corner
         self.window = window
 
     def draw(self):
-        top_left = Point(self.x1,self.y1)
+        top_left = Point(self.x1, self.y1)
         top_right = Point(self.x2, self.y1)
         bottom_right = Point(self.x2, self.y2)
         bottom_left = Point(self.x1, self.y2)
@@ -87,11 +90,24 @@ class Cell:
             left_wall_line = Line(top_left, bottom_left)
             self.window.draw_line(line=left_wall_line, fill_colour="black")
 
+    def draw_move(self, to_cell, undo=False):
+        if undo:
+            fill_colour = "gray"
+        else:
+            fill_colour = "red"
+        from_cell_point = Point((self.x1 + self.x2) / 2,
+                                (self.y1 + self.y2) / 2)  # Change if pixels can't be decimal by using round or int
+        to_cell_point = Point((to_cell.x1 + to_cell.x2) / 2,
+                              (to_cell.y1 + to_cell.y2) / 2)  # Change if pixels can't be decimal by using round or int
+        line_between = Line(from_cell_point, to_cell_point)
+        self.window.draw_line(line=line_between, fill_colour=fill_colour)
+
 def main():
     win = Window(800, 600)
-    cell1 = Cell(20,200,20,200,win)
+    cell1 = Cell(20, 200, 20, 200, win)
     cell1.draw()
     win.wait_for_close()
+
 
 if __name__ == '__main__':
     main()
