@@ -22,10 +22,10 @@ class Window:
         self.height = height
         self.root = Tk()  # Creates initial root widget using Tk() and sets it to root attribute
         self.root.title("My Maze Solver Application")  # Sets the root attributes title
-        self.canvas = Canvas(master=self.root)  # Creates a Canvas widget and sets it to the canvas attribute
+        self.canvas = Canvas(master=self.root, height=self.height, width=self.width)  # Creates a Canvas widget and sets it to the canvas attribute
         self.canvas.pack()  # Packs the canvas widget so it's ready to drawn
         self.running = False  # Represents whether the window is "running"
-        self.root.protocol("WM_DELETE_WINDOW", self.close())
+        self.root.protocol("WM_DELETE_WINDOW", self.close)
 
     def redraw(self):
         self.root.update_idletasks()
