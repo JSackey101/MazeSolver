@@ -118,7 +118,7 @@ class Cell:
         self.window.draw_line(line=line_between, fill_colour=fill_colour)
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, window=None):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, window=None, seed=None):
         self.cells = []
         self.x1 = x1
         self.y1 = y1
@@ -128,6 +128,7 @@ class Maze:
         self.cell_size_y = cell_size_y
         self.window = window
         self.create_cells()
+        self.seed = seed
 
     def create_cells(self):
         x1 = self.x1
@@ -161,7 +162,7 @@ class Maze:
 
     def break_entrance_and_exit(self):
         self.cells[0][0].has_top_wall = False
-        self.draw_cell(0,0)
+        self.draw_cell(0, 0)
         self.cells[-1][-1].has_bottom_wall = False
         self.draw_cell(self.num_cols - 1, self.num_rows - 1)
 
