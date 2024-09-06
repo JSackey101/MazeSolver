@@ -210,7 +210,10 @@ class Maze:
                     self.draw_cell(chosen_dir[0], chosen_dir[1])
             self.break_walls_r(chosen_dir[0], chosen_dir[1])
 
-
+    def reset_cells_visited(self):
+        for col in range(len(self.cells)):
+            for row in range(len(self.cells[0])):
+                self.cells[col][row].visited = False
 
 
 def main():
@@ -218,6 +221,7 @@ def main():
     maze = Maze(10,10,10,10,50,50,win)
     maze.break_entrance_and_exit()
     maze.break_walls_r(0,0)
+    maze.reset_cells_visited()
     win.wait_for_close()
 
 
