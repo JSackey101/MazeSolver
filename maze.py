@@ -71,6 +71,7 @@ class Cell:
         self.y1 = y1  # top left corner
         self.y2 = y2  # bottom right corner
         self.window = window
+        self.visited = False
 
     def draw(self):
         top_left = Point(self.x1, self.y1)
