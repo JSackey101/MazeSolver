@@ -84,25 +84,25 @@ class Cell:
             self.window.draw_line(line=top_wall_line, fill_colour="black")
         else:
             top_wall_line = Line(top_left, top_right)
-            self.window.draw_line(line=top_wall_line, fill_colour="white")
+            self.window.draw_line(line=top_wall_line, fill_colour="#d9d9d9")
         if self.has_bottom_wall:
             bottom_wall_line = Line(bottom_left, bottom_right)
             self.window.draw_line(line=bottom_wall_line, fill_colour="black")
         else:
             bottom_wall_line = Line(bottom_left, bottom_right)
-            self.window.draw_line(line=bottom_wall_line, fill_colour="white")
+            self.window.draw_line(line=bottom_wall_line, fill_colour="#d9d9d9")
         if self.has_right_wall:
             right_wall_line = Line(top_right, bottom_right)
             self.window.draw_line(line=right_wall_line, fill_colour="black")
         else:
             right_wall_line = Line(top_right, bottom_right)
-            self.window.draw_line(line=right_wall_line, fill_colour="white")
+            self.window.draw_line(line=right_wall_line, fill_colour="#d9d9d9")
         if self.has_left_wall:
             left_wall_line = Line(top_left, bottom_left)
             self.window.draw_line(line=left_wall_line, fill_colour="black")
         else:
             left_wall_line = Line(top_left, bottom_left)
-            self.window.draw_line(line=left_wall_line, fill_colour="white")
+            self.window.draw_line(line=left_wall_line, fill_colour="#d9d9d9")
 
     def draw_move(self, to_cell, undo=False):
         if undo:
