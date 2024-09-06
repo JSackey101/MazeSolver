@@ -172,24 +172,14 @@ class Maze:
         self.draw_cell(self.num_cols - 1, self.num_rows - 1)
 
     def break_walls_r(self, i, j):
-        print(i)
-        print(j)
         self.cells[i][j].visited = True
-        #print(len(self.cells))
-        #print(len(self.cells[0]))
-        #print(self.num_cols)
-        #print(self.num_rows)
-        #print("LENGTH of matrix")
-        placeholder = True
-        while placeholder:
+        breaking_walls = True
+        while breaking_walls:
             possible_dir = []
             for adj_i in range(i-1,i+2):
-                #print(adj_i)
                 if adj_i > self.num_cols - 1 or adj_i < 0: # rejects cases out of the matrix bounds
                     continue
-                #print("If adj_i which is {} = <0 here somethings wrong".format(adj_i))
                 for adj_j in range(j-1, j+2):
-                    #print(adj_j)
                     if adj_j > self.num_rows - 1 or adj_j < 0: # rejects cases out of matrix bounds
                         continue
                     if adj_i == i + 1 and adj_j == j + 1: # rejects the diagonal move
@@ -201,31 +191,21 @@ class Maze:
                     if not self.cells[adj_i][adj_j].visited:
                         possible_dir.append((adj_i,adj_j))
             if len(possible_dir) == 0:
-                #self.draw_cell(i, j)
                 return
-            print(possible_dir)
             ran = random.randrange(len(possible_dir))
             chosen_dir = possible_dir[ran]
             if chosen_dir[0] == i:
-                if chosen_dir[1] > j:
-                    #print("({},{})".format(i,j))
-                    print("A - Moves down")
+                if chosen_dir[1] > j: # Next cell is below
                     self.cells[chosen_dir[0]][chosen_dir[1]].has_top_wall = False
                     self.draw_cell(chosen_dir[0], chosen_dir[1])
-                elif chosen_dir[1] < j:
-                    #print("({},{})".format(i,j))
-                    print("B - Moves up")
+                elif chosen_dir[1] < j: # Next cell is above
                     self.cells[chosen_dir[0]][chosen_dir[1]].has_bottom_wall = False
                     self.draw_cell(chosen_dir[0], chosen_dir[1])
             elif chosen_dir[1] == j:
-                if chosen_dir[0] > i:
-                    #print("({},{})".format(i,j))
-                    print("C - Moves right")
+                if chosen_dir[0] > i: # Next cell is to the right
                     self.cells[chosen_dir[0]][chosen_dir[1]].has_left_wall = False
                     self.draw_cell(chosen_dir[0], chosen_dir[1])
-                elif chosen_dir[0] < i:
-                    #print("({},{})".format(i,j))
-                    print("D - Moves left")
+                elif chosen_dir[0] < i: # Next cell is to the left
                     self.cells[chosen_dir[0]][chosen_dir[1]].has_right_wall = False
                     self.draw_cell(chosen_dir[0], chosen_dir[1])
             self.break_walls_r(chosen_dir[0], chosen_dir[1])
@@ -235,7 +215,7 @@ class Maze:
 
 def main():
     win = Window(800, 600)
-    maze = Maze(10,10,5,4,50,50,win)
+    maze = Maze(10,10,10,10,50,50,win)
     maze.break_entrance_and_exit()
     maze.break_walls_r(0,0)
     win.wait_for_close()
