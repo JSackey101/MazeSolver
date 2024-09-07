@@ -222,6 +222,66 @@ class Maze:
         else:
             return False
 
+    def solve_r(self,i,j):
+        self.animate()
+        self.cells[i][j].visited = True
+        if self.cells[i][j] == self.cells[-1][-1]:
+            return True
+        possible_dir = []
+        for adj_i in range(i - 1, i + 2):
+            if adj_i > self.num_cols - 1 or adj_i < 0:  # rejects cases out of the matrix bounds
+                continue
+            for adj_j in range(j - 1, j + 2):
+                if adj_j > self.num_rows - 1 or adj_j < 0:  # rejects cases out of matrix bounds
+                    continue
+                if adj_i == i + 1 and adj_j == j + 1:  # rejects the diagonal move
+                    continue
+                if adj_i == i - 1 and adj_j == j - 1:  # rejects the diagonal move
+                    continue
+                if adj_i != i and adj_j != j:  # rejects mvoves where both i and j change as only 1 should change
+                    continue
+                possible_dir.append((adj_i, adj_j))
+        for count in range(len(possible_dir) + 1):
+            if count == len(possible_dir) + 1:
+                return False
+            current_dir = possible_dir[count]
+            if current_dir[0] == i:
+                if current_dir[1] > j:  # Next cell is below
+                    if self.cells[current_dir[0]][current_dir[1]].has_top_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
+                        end_reached = self.solve_r(current_dir[0], current_dir[1])
+                        if end_reached:
+                            return True
+                        else:
+                            self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]], undo=True)
+                elif current_dir[1] < j:  # Next cell is above
+                    if self.cells[current_dir[0]][current_dir[1]].has_bottom_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
+                        end_reached = self.solve_r(current_dir[0], current_dir[1])
+                        if end_reached:
+                            return True
+                        else:
+                            self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]], undo=True)
+
+            elif current_dir[1] == j:
+                if current_dir[0] > i:  # Next cell is to the right
+                    if self.cells[current_dir[0]][current_dir[1]].has_left_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
+                        end_reached = self.solve_r(current_dir[0], current_dir[1])
+                        if end_reached:
+                            return True
+                        else:
+                            self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]], undo=True)
+
+                elif current_dir[0] < i:  # Next cell is to the left
+                    if self.cells[current_dir[0]][current_dir[1]].has_right_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
+                        end_reached = self.solve_r(current_dir[0], current_dir[1])
+                        if end_reached:
+                            return True
+                        else:
+                            self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]], undo=True)
+
 
 def main():
     win = Window(800, 600)
@@ -229,6 +289,7 @@ def main():
     maze.break_entrance_and_exit()
     maze.break_walls_r(0,0)
     maze.reset_cells_visited()
+    maze.solve()
     win.wait_for_close()
 
 
