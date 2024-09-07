@@ -109,13 +109,16 @@ class Cell:
             fill_colour = "gray"
         else:
             fill_colour = "red"
-        from_cell_point = Point(round((self.x1 + self.x2) / 2),
-                                round(
-                                    (self.y1 + self.y2) / 2))  # Change if pixels can't be decimal by using round or int
-        to_cell_point = Point(round((to_cell.x1 + to_cell.x2) / 2),
-                              round((
-                                                to_cell.y1 + to_cell.y2) / 2))  # Change if pixels can't be decimal by using round or int
+        from_cell_point = Point((self.x1 + self.x2) / 2,
+
+                                    (self.y1 + self.y2) / 2)  # Change if pixels can't be decimal by using round or int
+        to_cell_point = Point((to_cell.x1 + to_cell.x2) / 2,
+                              (
+                                                to_cell.y1 + to_cell.y2) / 2)  # Change if pixels can't be decimal by using round or int
         print(to_cell_point.x)
+        print(to_cell_point.y)
+        print(from_cell_point.x)
+        print(from_cell_point.y)
         line_between = Line(from_cell_point, to_cell_point)
         self.window.draw_line(line=line_between, fill_colour=fill_colour)
 
@@ -141,7 +144,7 @@ class Maze:
             y1 = self.y1
             cell_column = []
             for i in range(self.num_rows):
-                cell_column.append(Cell(x1, y1, x1 + self.cell_size_x, y1 + self.cell_size_y))
+                cell_column.append(Cell(x1, x1 + self.cell_size_x, y1, y1 + self.cell_size_y))
                 y1 += self.cell_size_y
             self.cells.append(cell_column)
             x1 += self.cell_size_x
@@ -240,14 +243,21 @@ class Maze:
                     continue
                 if adj_i != i and adj_j != j:  # rejects mvoves where both i and j change as only 1 should change
                     continue
+                if adj_i == i and adj_j == j:
+                    continue
                 possible_dir.append((adj_i, adj_j))
+        print(possible_dir)
         for count in range(len(possible_dir) + 1):
-            if count == len(possible_dir) + 1:
+            if count == len(possible_dir):
                 return False
             current_dir = possible_dir[count]
+            print(current_dir)
+            print("{}, {}".format(i,j))
             if current_dir[0] == i:
                 if current_dir[1] > j:  # Next cell is below
                     if self.cells[current_dir[0]][current_dir[1]].has_top_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].window = self.window
+                        self.cells[current_dir[0]][current_dir[1]].window = self.window
                         self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
                         end_reached = self.solve_r(current_dir[0], current_dir[1])
                         if end_reached:
@@ -256,6 +266,8 @@ class Maze:
                             self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]], undo=True)
                 elif current_dir[1] < j:  # Next cell is above
                     if self.cells[current_dir[0]][current_dir[1]].has_bottom_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].window = self.window
+                        self.cells[current_dir[0]][current_dir[1]].window = self.window
                         self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
                         end_reached = self.solve_r(current_dir[0], current_dir[1])
                         if end_reached:
@@ -266,6 +278,8 @@ class Maze:
             elif current_dir[1] == j:
                 if current_dir[0] > i:  # Next cell is to the right
                     if self.cells[current_dir[0]][current_dir[1]].has_left_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].window = self.window
+                        self.cells[current_dir[0]][current_dir[1]].window = self.window
                         self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
                         end_reached = self.solve_r(current_dir[0], current_dir[1])
                         if end_reached:
@@ -275,6 +289,8 @@ class Maze:
 
                 elif current_dir[0] < i:  # Next cell is to the left
                     if self.cells[current_dir[0]][current_dir[1]].has_right_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
+                        self.cells[i][j].window = self.window
+                        self.cells[current_dir[0]][current_dir[1]].window = self.window
                         self.cells[i][j].draw_move(self.cells[current_dir[0]][current_dir[1]])
                         end_reached = self.solve_r(current_dir[0], current_dir[1])
                         if end_reached:
@@ -285,7 +301,7 @@ class Maze:
 
 def main():
     win = Window(800, 600)
-    maze = Maze(10,10,10,10,50,50,win)
+    maze = Maze(10,10,4,4,50,50,win)
     maze.break_entrance_and_exit()
     maze.break_walls_r(0,0)
     maze.reset_cells_visited()
