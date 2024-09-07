@@ -215,6 +215,13 @@ class Maze:
             for row in range(len(self.cells[0])):
                 self.cells[col][row].visited = False
 
+    def solve(self):
+        solved = self.solve_r(0,0)
+        if solved:
+            return True
+        else:
+            return False
+
 
 def main():
     win = Window(800, 600)
