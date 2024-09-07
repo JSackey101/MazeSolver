@@ -115,10 +115,6 @@ class Cell:
         to_cell_point = Point((to_cell.x1 + to_cell.x2) / 2,
                               (
                                                 to_cell.y1 + to_cell.y2) / 2)  # Change if pixels can't be decimal by using round or int
-        print(to_cell_point.x)
-        print(to_cell_point.y)
-        print(from_cell_point.x)
-        print(from_cell_point.y)
         line_between = Line(from_cell_point, to_cell_point)
         self.window.draw_line(line=line_between, fill_colour=fill_colour)
 
@@ -246,13 +242,10 @@ class Maze:
                 if adj_i == i and adj_j == j:
                     continue
                 possible_dir.append((adj_i, adj_j))
-        print(possible_dir)
         for count in range(len(possible_dir) + 1):
             if count == len(possible_dir):
                 return False
             current_dir = possible_dir[count]
-            print(current_dir)
-            print("{}, {}".format(i,j))
             if current_dir[0] == i:
                 if current_dir[1] > j:  # Next cell is below
                     if self.cells[current_dir[0]][current_dir[1]].has_top_wall == False and self.cells[current_dir[0]][current_dir[1]].visited == False:
@@ -301,7 +294,7 @@ class Maze:
 
 def main():
     win = Window(800, 600)
-    maze = Maze(10,10,4,4,50,50,win)
+    maze = Maze(10,10,10,10,50,50,win)
     maze.break_entrance_and_exit()
     maze.break_walls_r(0,0)
     maze.reset_cells_visited()
