@@ -152,12 +152,12 @@ class Maze:
         cell_x_pos = self.x1 + (i * self.cell_size_x)
         cell_y_pos = self.y1 + (j * self.cell_size_y)
         if self.window:
-            cell = Cell(cell_x_pos, cell_x_pos + self.cell_size_x, cell_y_pos, cell_y_pos + self.cell_size_y, self.window)
-            cell.has_top_wall = self.cells[i][j].has_top_wall
-            cell.has_bottom_wall = self.cells[i][j].has_bottom_wall
-            cell.has_left_wall = self.cells[i][j].has_left_wall
-            cell.has_right_wall = self.cells[i][j].has_right_wall
-            cell.draw()
+            self.cells[i][j].window = self.window
+            self.cells[i][j].x1 = cell_x_pos
+            self.cells[i][j].y1 = cell_y_pos
+            self.cells[i][j].x2 = cell_x_pos + self.cell_size_x
+            self.cells[i][j].y2 = cell_y_pos + self.cell_size_y
+            self.cells[i][j].draw()
             self.animate()
 
     def animate(self):
